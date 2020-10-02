@@ -1,9 +1,9 @@
 import requests, json, random, sys, os, time, os.path
 """
-Gopay Accounts Manager
-Author: @corrykalam
-Date: 06/09/2019
-Bantu acc PR gan :(
+GoPay Accounts Manager
+Author Source : @corrykalam
+Date : 06/09/2019
+Bantu acc PR yaa gan :(
 """
 uniqueid = "ac03e5d1e7c3b%s"%(random.randint(000,999));
 base_url = "https://api.gojekapi.com"
@@ -32,7 +32,7 @@ def sendOtp(phone):
         print("Succes send OTP!")
         return jsonq["data"]["login_token"]
     else:
-        print("Failed send OTP | %s"%jsonq["errors"][0]["message"])
+        print("Failed sending OTP | %s"%jsonq["errors"][0]["message"])
         return False
 
 def login(logintoken, otp, nameconfig, pin):
@@ -45,7 +45,7 @@ def login(logintoken, otp, nameconfig, pin):
         backupConfig()
         return True
     else:
-        print("Failed login | %s"%(jsonq["errors"][0]["message"]))
+        print("Failed login to your account | %s"%(jsonq["errors"][0]["message"]))
         return False
 
 def checkWalletCode(phone,token, uniqueid):
@@ -58,7 +58,7 @@ def checkWalletCode(phone,token, uniqueid):
         if jsonq["success"] == True:
             return jsonq["data"]["qr_id"]
         else:
-            print("Failed check walletcode | %s"%(jsonq["errors"][0]["message"]))
+            print("Failed! check walletcode | %s"%(jsonq["errors"][0]["message"]))
             return False
     else:
         headers["Authorization"] = "Bearer %s"%(token)
@@ -68,7 +68,7 @@ def checkWalletCode(phone,token, uniqueid):
         if jsonq["success"] == True:
             return jsonq["data"]["qr_id"]
         else:
-            print("Failed check walletcode | %s"%(jsonq["errors"][0]["message"]))
+            print("Failed to check walletcode | %s"%(jsonq["errors"][0]["message"]))
             return False
 
 def sendWallet(qrcode, token, pin, uniqueid):
@@ -114,7 +114,7 @@ banner = """
 ╚██████╔╝╚██████╔╝██║     ██║  ██║   ██║   
  ╚═════╝  ╚═════╝ ╚═╝     ╚═╝  ╚═╝   ╚═╝   
             Accounts Manager                                   
-           @author: corrykalam
+       @author source : corrykalam
 """
 menu = """
 [1] Check Balance
@@ -125,7 +125,7 @@ menu = """
 [6] Change pin account (Only change json)
 [7] Add accounts
 [8] Delete accounts
-[0] Exit
+[0] Exit tools
 """
 if os.path.exists('config.json') == False:
     print("Creating config file!")
@@ -274,7 +274,7 @@ else:
         else:
             print("Accounts not found!")
             sys.exit(0)
-        number_logx = input('Number to send Rp.1 Mass (Delimiter `,`): ')
+        number_logx = input('Input Number to send Rp.1 Mass (Delimiter `,`): ')
         amount_logx = input('Amount: ')
         for numbermass in number_logx.split(","):
             wallet_logx = checkWalletCode(numbermass, token, unique)
@@ -301,7 +301,7 @@ else:
                 pin += config[int(accounts_enter)-1][key]["pin"]
                 unique += config[int(accounts_enter)-1][key]["uniqueid"]
         else:
-            print("Accounts not found!")
+            print("Accounts was not found!")
             sys.exit(0)
         new_pin = input('Enter new pin: ')
         config[int(accounts_enter)-1][key]["pin"] = new_pin
